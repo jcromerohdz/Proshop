@@ -1,16 +1,24 @@
 import mongoose from "mongoose";
 
-const reviewSchema = mongoose.Schema({
-	name: { type: String, required: true},
-	rating: { type: Number, required: true},
-	name: { comment: String, required: true},
-}, {
-	timestamps: true
-})
+const reviewSchema = mongoose.Schema(
+  {
+    name: { type: String, required: true },
+    rating: { type: Number, required: true },
+    comment: { type: String, required: true },
+    user: {
+      type: mongoose.Schema.Types.ObjectId,
+      required: true,
+      ref: 'User',
+    },
+  },
+  {
+    timestamps: true,
+  }
+)
 
 const productSchema = mongoose.Schema({
 	user: {
-		type: mongoose.Schema.Types.ObjectId,
+		type: mongoose.Types.ObjectId,
 		required: true,
 		ref: 'User'
 	},
@@ -55,6 +63,6 @@ const productSchema = mongoose.Schema({
 	timestamps: true
 })
 
-const Product = mongoose.model('Product', proSchema)
+const Product = mongoose.model('Product', productSchema)
 
 export default Product
