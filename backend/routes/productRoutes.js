@@ -17,17 +17,17 @@ router.get('/', asyncHandler(async(req, res) => {
 // @GET    GET api/products/:id
 // @access Public 
 router.get('/:id', asyncHandler(async(req, res) => {
-  let product = '' 
-  if (req.params.id.match(/^[0-9a-fA-F]{24}$/)) {
+  //let product = '' 
+  //if (req.params.id.match(/^[0-9a-fA-F]{24}$/)) {
   // Yes, it's a valid ObjectId, proceed with `findById` call.
-    product = await Product.findById(req.params.id) 
-  }
+    const product = await Product.findById(req.params.id) 
+  //}
 
     if(product) {
       res.json(product)
     }else {
-      console.log()
-      res.status(404).json({message: 'Product not found'})
+      res.status(404)
+      throw new Error('Product not found')
     }
 
 }))
