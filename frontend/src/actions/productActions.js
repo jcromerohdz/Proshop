@@ -7,6 +7,7 @@ import {
   PRODUCT_DETAILS_SUCCESS,
   PRODUCT_DETAILS_FAIL
 } from '../constants/productConstants'
+import { USER_LOGOUT } from '../constants/userConstants'
 
 export const listProducts = () => async (dispatch) => {
   try {
@@ -52,5 +53,4 @@ export const listProductsDetails = (id) => async (dispatch) => {
     })
     
   }
-
 }
