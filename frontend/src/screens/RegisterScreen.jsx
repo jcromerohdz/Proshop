@@ -22,7 +22,6 @@ const RegisterScreen = () => {
   const { loadding, error, userInfo } = userRegister
 
   const redirect = location.search ? location.search.split('=')[0] : '/'
-  console.log(redirect)
 
   useEffect(()=> {
     if(userInfo){
