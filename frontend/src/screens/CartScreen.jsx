@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { Row, Col, ListGroup, Image, Form, Button, Card} from 'react-bootstrap'
 import Message from '../components/Message'
 import { addToCart, removeFromCart } from '../actions/cartActions'
+import { login } from '../actions/userActions'
 
 const CartScreen = () => {
   const {id} = useParams()
@@ -18,6 +19,9 @@ const CartScreen = () => {
   const cart = useSelector(state => state.cart)
   const { cartItems } = cart
 
+  const userLogin = useSelector(state => state.userLogin)
+  const { loadding, error, userInfo } = userLogin
+
   useEffect(() => {
     if(productId) {
       dispatch(addToCart(productId, qty))
@@ -26,14 +30,16 @@ const CartScreen = () => {
   }, [dispatch, productId, qty])
 
   const removeFromCartHandler = (id) => {
-    console.log('remove')
 		dispatch(removeFromCart(id))
-
   }
 
   const checkoutHandler = (id) => {
     console.log('checkout')
-    navigate('/login?redirect=shipping')
+    if(userInfo){
+      navigate('/shipping')
+    }else{
+      navigate('/login')
+    }
   }
   
   return (
