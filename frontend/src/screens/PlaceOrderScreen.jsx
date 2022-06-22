@@ -9,6 +9,20 @@ import CheckoutSteps from '../components/CheckoutSteps'
 const PlaceOrderScreen = () => {
   const cart = useSelector(state => state.cart)
 
+  // Helper Functions to have decimals
+  const addDecimals = (num) => {
+    return (Math.round(num * 100) / 100).toFixed(2)
+  }
+
+  // Calculate prices
+  cart.itemsPrice = addDecimals(cart.cartItems.reduce((acc, item) => acc + item.price * item.qty, 0))
+
+  cart.shippingPrice = addDecimals(cart.itemsPrice > 100 ? 0 : 100)
+
+  cart.taxPrice = addDecimals(Number((0.15 * cart.itemsPrice).toFixed(2)))
+
+  cart.totalPrice = (Number(cart.itemsPrice) + Number(cart.shippingPrice) + Number(cart.taxPrice)).toFixed(2)
+
   const placeOrderHandler = () =>{
     console.log('Place Order')
 
@@ -94,7 +108,7 @@ const PlaceOrderScreen = () => {
                 <Button
                   type='button'
                   className='btn-block'
-                  disable={cart.cartItems === 0}
+                  disabled={cart.cartItems === 0}
                   onClick={placeOrderHandler}
                 >Place Order</Button>
               </div>
